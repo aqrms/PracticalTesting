@@ -1,5 +1,7 @@
 package com.example.practicaltest.spring.domain.product;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -7,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ProductType {
 
-    HANDMAD("제조 음료"),
+    HANDMADE("제조 음료"),
     BOTTLE("병 음료"),
     BAKERY("베이커리");
 
