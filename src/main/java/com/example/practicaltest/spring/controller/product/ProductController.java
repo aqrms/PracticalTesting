@@ -1,4 +1,4 @@
-package com.example.practicaltest.spring.controller;
+package com.example.practicaltest.spring.controller.product;
 
 import java.util.List;
 
