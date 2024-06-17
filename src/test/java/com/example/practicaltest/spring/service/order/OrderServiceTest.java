@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import com.example.practicaltest.spring.controller.request.OrderCreateRequest;
+import com.example.practicaltest.spring.domain.order.OrderRepository;
+import com.example.practicaltest.spring.domain.orderproduct.OrderProductRepository;
 import com.example.practicaltest.spring.domain.product.Product;
 import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductType;
@@ -20,22 +23,33 @@ import com.example.practicaltest.spring.service.response.OrderResponse;
 
 @ActiveProfiles("test")
 @SpringBootTest
-// @DataJpaTest
+    // @DataJpaTest
 class OrderServiceTest {
 
     @Autowired
     private ProductRepository productRepository;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderProductRepository orderProductRepository;
+
+    @AfterEach
+    void tearDown() {
+        orderProductRepository.deleteAllInBatch();
+        productRepository.deleteAllInBatch();
+        orderRepository.deleteAllInBatch();
+    }
 
     @DisplayName("주문번호 리스트를 받아 주문을 생성한다.")
     @Test
-    public void test() {
+    public void createOrder() {
         //given
         Product product1 = createProduct(ProductType.HANDMADE, "001", 1000);
         Product product2 = createProduct(ProductType.HANDMADE, "002", 3000);
         Product product3 = createProduct(ProductType.HANDMADE, "003", 5000);
-        productRepository.saveAll(List.of(product1,product2,product3));
+        productRepository.saveAll(List.of(product1, product2, product3));
 
         OrderCreateRequest request = OrderCreateRequest.builder()
             .productNumbers(List.of("001", "002"))
@@ -65,7 +79,7 @@ class OrderServiceTest {
         Product product1 = createProduct(ProductType.HANDMADE, "001", 1000);
         Product product2 = createProduct(ProductType.HANDMADE, "002", 3000);
         Product product3 = createProduct(ProductType.HANDMADE, "003", 5000);
-        productRepository.saveAll(List.of(product1,product2,product3));
+        productRepository.saveAll(List.of(product1, product2, product3));
 
         OrderCreateRequest request = OrderCreateRequest.builder()
             .productNumbers(List.of("001", "001"))
@@ -88,7 +102,7 @@ class OrderServiceTest {
 
     }
 
-    private Product createProduct (ProductType type, String productNumber, int price) {
+    private Product createProduct(ProductType type, String productNumber, int price) {
         return Product.builder()
             .type(type)
             .productNumber(productNumber)
