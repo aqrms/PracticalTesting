@@ -19,6 +19,8 @@ import com.example.practicaltest.spring.domain.orderproduct.OrderProductReposito
 import com.example.practicaltest.spring.domain.product.Product;
 import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductType;
+import com.example.practicaltest.spring.domain.stock.Stock;
+import com.example.practicaltest.spring.domain.stock.StockRepository;
 import com.example.practicaltest.spring.service.response.OrderResponse;
 
 @ActiveProfiles("test")
@@ -35,6 +37,8 @@ class OrderServiceTest {
     private OrderRepository orderRepository;
     @Autowired
     private OrderProductRepository orderProductRepository;
+    @Autowired
+    private StockRepository stockRepository;
 
     // @AfterEach
     // void tearDown() {
@@ -80,10 +84,14 @@ class OrderServiceTest {
         //given
         LocalDateTime registeredDateTime = LocalDateTime.now();
 
-        Product product1 = createProduct(ProductType.HANDMADE, "001", 1000);
-        Product product2 = createProduct(ProductType.HANDMADE, "002", 3000);
+        Product product1 = createProduct(ProductType.BOTTLE, "001", 1000);
+        Product product2 = createProduct(ProductType.BAKERY, "002", 3000);
         Product product3 = createProduct(ProductType.HANDMADE, "003", 5000);
         productRepository.saveAll(List.of(product1, product2, product3));
+
+        Stock stock1 = Stock.create("001", 2);
+        Stock stock2 = Stock.create("002", 2);
+        stockRepository.saveAll(List.of(stock1, stock2));
 
         OrderCreateRequest request = OrderCreateRequest.builder()
             .productNumbers(List.of("001", "001", "002", "003"))
@@ -96,14 +104,23 @@ class OrderServiceTest {
         assertThat(response.getId()).isNotNull();
         assertThat(response)
             .extracting("registeredDateTime", "totalPrice")
-            .contains(registeredDateTime, 4000);
-        assertThat(response.getProducts()).hasSize(2)
+            .contains(registeredDateTime, 10000);
+        assertThat(response.getProducts()).hasSize(4)
             .extracting("productNumber", "price")
             .containsExactlyInAnyOrder(
                 tuple("001", 1000),
-                tuple("002", 3000)
+                tuple("001", 1000),
+                tuple("002", 3000),
+                tuple("003", 5000)
             );
 
+        List<Stock> stocks = stockRepository.findAll();
+        assertThat(stocks).hasSize(2)
+            .extracting("productNumber", "quantity")
+            .containsExactlyInAnyOrder(
+                tuple("001", 0),
+                tuple("002", 1)
+            );
     }
 
     @DisplayName("중복 상품번호 리스트로 주문을 생성할 수 있다.")
