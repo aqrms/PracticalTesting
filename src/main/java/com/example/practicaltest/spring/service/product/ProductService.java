@@ -3,6 +3,7 @@ package com.example.practicaltest.spring.service.product;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.practicaltest.spring.controller.product.request.ProductCreateRequest;
 import com.example.practicaltest.spring.domain.product.Product;
@@ -13,11 +14,13 @@ import com.example.practicaltest.spring.domain.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
 
+    @Transactional
     public ProductResponse createProduct(ProductCreateRequest request) {
         String nextProductNumber = createNextProductNumber();
         Product product = request.toEntity(nextProductNumber);
