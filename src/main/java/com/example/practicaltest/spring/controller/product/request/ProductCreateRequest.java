@@ -1,5 +1,6 @@
 package com.example.practicaltest.spring.controller.product.request;
 
+import com.example.practicaltest.spring.domain.product.Product;
 import com.example.practicaltest.spring.domain.product.ProductSellingStatus;
 import com.example.practicaltest.spring.domain.product.ProductType;
 
@@ -22,5 +23,15 @@ public class ProductCreateRequest {
         this.sellingStatus = sellingStatus;
         this.name = name;
         this.price = price;
+    }
+
+    public Product toEntity(String nextProductNumber) {
+        return Product.builder()
+            .productNumber(nextProductNumber)
+            .type(type)
+            .sellingStatus(sellingStatus)
+            .name(name)
+            .price(price)
+            .build();
     }
 }

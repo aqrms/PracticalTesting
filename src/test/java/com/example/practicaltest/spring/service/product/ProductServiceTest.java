@@ -4,6 +4,8 @@ import static com.example.practicaltest.spring.domain.product.ProductSellingStat
 import static com.example.practicaltest.spring.domain.product.ProductType.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.List;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -54,6 +56,14 @@ class ProductServiceTest {
             .extracting("productNumber", "type", "sellingStatus", "name", "price")
             .contains("002", HANDMADE, SELLING, "카푸치노", 5000);
 
+        List<Product> products = productRepository.findAll();
+        assertThat(products).hasSize(2)
+            .extracting("productNumber", "type", "sellingStatus", "name", "price")
+            .containsExactlyInAnyOrder(
+                tuple("001", HANDMADE, SELLING, "아메리카노", 4000),
+                tuple("002", HANDMADE, SELLING, "카푸치노", 5000)
+            );
+
     }
 
     @DisplayName("상품이 하나도 없는 경우에 신규 상품을 등록할 때, 상품번호는 001을 할당한다.")
@@ -75,6 +85,12 @@ class ProductServiceTest {
             .extracting("productNumber", "type", "sellingStatus", "name", "price")
             .contains("001", HANDMADE, SELLING, "카푸치노", 5000);
 
+        List<Product> products = productRepository.findAll();
+        assertThat(products).hasSize(1)
+            .extracting("productNumber", "type", "sellingStatus", "name", "price")
+            .containsExactlyInAnyOrder(
+                tuple("001", HANDMADE, SELLING, "카푸치노", 5000)
+            );
     }
 
     private Product createProduct(String productNumber, ProductType type, ProductSellingStatus sellingStatus,
