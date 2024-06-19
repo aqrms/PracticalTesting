@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.practicaltest.spring.controller.request.OrderCreateRequest;
+import com.example.practicaltest.spring.controller.order.request.OrderCreateRequest;
 import com.example.practicaltest.spring.domain.order.OrderRepository;
 import com.example.practicaltest.spring.domain.orderproduct.OrderProductRepository;
 import com.example.practicaltest.spring.domain.product.Product;
@@ -48,7 +48,7 @@ class OrderServiceTest {
 
     @DisplayName("주문번호 리스트를 받아 주문을 생성한다.")
     @Test
-    public void createOrder() {
+    void createOrder() {
         //given
         LocalDateTime registeredDateTime = LocalDateTime.now();
 
@@ -79,7 +79,7 @@ class OrderServiceTest {
 
     @DisplayName("재고가 있는 상품이 포함된 주문번호 리스트로 주문을 생성한다.")
     @Test
-    public void createOrderWithStock() {
+    void createOrderWithStock() {
         //given
         LocalDateTime registeredDateTime = LocalDateTime.now();
 
@@ -124,7 +124,7 @@ class OrderServiceTest {
 
     @DisplayName("중복 상품번호 리스트로 주문을 생성할 수 있다.")
     @Test
-    public void createOrderWithDuplicateProductNumbers() {
+    void createOrderWithDuplicateProductNumbers() {
         //given
         Product product1 = createProduct(ProductType.HANDMADE, "001", 1000);
         Product product2 = createProduct(ProductType.HANDMADE, "002", 3000);

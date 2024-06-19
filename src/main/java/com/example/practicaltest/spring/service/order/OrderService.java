@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.practicaltest.spring.controller.request.OrderCreateRequest;
+import com.example.practicaltest.spring.controller.order.request.OrderCreateRequest;
 import com.example.practicaltest.spring.domain.order.Order;
 import com.example.practicaltest.spring.domain.order.OrderRepository;
 import com.example.practicaltest.spring.domain.product.Product;
@@ -60,24 +60,21 @@ public class OrderService {
     }
 
     private List<String> extractStockProductNumbers(List<Product> products) {
-        List<String> stockProductNumbers = products.stream()
+        return products.stream()
             .filter(product -> ProductType.containsStockType(product.getType()))
             .map(Product::getProductNumber)
             .toList();
-        return stockProductNumbers;
     }
 
     private Map<String, Stock> createStockMapBy(List<String> stockProductNumbers) {
         List<Stock> stocks = stockRepository.findAllByProductNumberIn(stockProductNumbers);
-        Map<String, Stock> stockMap = stocks.stream()
+        return stocks.stream()
             .collect(Collectors.toMap(Stock::getProductNumber, s -> s));
-        return stockMap;
     }
 
     private Map<String, Long> createCountingMapBy(List<String> stockProductNumbers) {
-        Map<String, Long> productCountingMap = stockProductNumbers.stream()
+        return stockProductNumbers.stream()
             .collect(Collectors.groupingBy(p -> p, Collectors.counting()));
-        return productCountingMap;
     }
 
     private List<Product> findProductsBy(List<String> productNumbers) {
