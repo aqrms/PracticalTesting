@@ -8,12 +8,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.practicaltest.spring.controller.product.request.ProductCreateRequest;
+import com.example.practicaltest.spring.api.controller.product.ProductController;
+import com.example.practicaltest.spring.api.controller.product.request.ProductCreateRequest;
+import com.example.practicaltest.spring.api.service.product.ProductService;
 import com.example.practicaltest.spring.domain.product.ProductSellingStatus;
 import com.example.practicaltest.spring.domain.product.ProductType;
-import com.example.practicaltest.spring.service.product.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(controllers = ProductController.class)
@@ -42,6 +44,7 @@ class ProductControllerTest {
                 .content(objectMapper.writeValueAsString(request))
                 .contentType(MediaType.APPLICATION_JSON)
             )
+            .andDo(MockMvcResultHandlers.print())
             .andExpect(MockMvcResultMatchers.status().isOk());
 
     }

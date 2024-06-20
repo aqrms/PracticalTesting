@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.practicaltest.spring.controller.product.request.ProductCreateRequest;
+import com.example.practicaltest.spring.api.controller.product.request.ProductCreateRequest;
+import com.example.practicaltest.spring.api.service.product.ProductService;
 import com.example.practicaltest.spring.domain.product.Product;
 import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductSellingStatus;

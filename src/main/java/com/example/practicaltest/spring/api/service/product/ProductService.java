@@ -1,11 +1,11 @@
-package com.example.practicaltest.spring.service.product;
+package com.example.practicaltest.spring.api.service.product;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.practicaltest.spring.controller.product.request.ProductCreateRequest;
+import com.example.practicaltest.spring.api.controller.product.request.ProductCreateRequest;
 import com.example.practicaltest.spring.domain.product.Product;
 import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductSellingStatus;
