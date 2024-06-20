@@ -75,4 +75,80 @@ class ProductControllerTest {
 
     }
 
+    @DisplayName("신규 상품을 등록할 때, 판매상태는 필수값이다.")
+    @Test
+    void createProductWithoutSellingStatus() throws Exception {
+        //given
+        ProductCreateRequest request = ProductCreateRequest.builder()
+            .type(ProductType.HANDMADE)
+            .name("아메리카노")
+            .price(4000)
+            .build();
+
+        //when //then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products/new")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.message").value("상품 판매상태는 필수입니다."))
+            .andExpect(jsonPath("$.data").isEmpty()
+            );
+
+    }
+
+    @DisplayName("신규 상품을 등록할 때, 이름은 필수값이다.")
+    @Test
+    void createProductWithoutName() throws Exception {
+        //given
+        ProductCreateRequest request = ProductCreateRequest.builder()
+            .type(ProductType.HANDMADE)
+            .sellingStatus(ProductSellingStatus.SELLING)
+            .price(4000)
+            .build();
+
+        //when //then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products/new")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.message").value("상품이름은 필수입니다."))
+            .andExpect(jsonPath("$.data").isEmpty()
+            );
+
+    }
+
+    @DisplayName("신규 상품을 등록할 때, 가격은 양수여야 한다.")
+    @Test
+    void createProductWithPositiveprice() throws Exception {
+        //given
+        ProductCreateRequest request = ProductCreateRequest.builder()
+            .type(ProductType.HANDMADE)
+            .sellingStatus(ProductSellingStatus.SELLING)
+            .name("아메리카노")
+            .price(-4000)
+            .build();
+
+        //when //then
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/products/new")
+                .content(objectMapper.writeValueAsString(request))
+                .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andDo(MockMvcResultHandlers.print())
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.code").value("400"))
+            .andExpect(jsonPath("$.status").value("BAD_REQUEST"))
+            .andExpect(jsonPath("$.message").value("상품가격은 양수여야 합니다."))
+            .andExpect(jsonPath("$.data").isEmpty()
+            );
+
+    }
+
 }
