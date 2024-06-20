@@ -2,6 +2,9 @@ package com.example.practicaltest.spring.api;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Getter;
+
+@Getter
 public class ApiResponse<T> {
 
     private int code;
@@ -16,11 +19,15 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
+    public static <T> ApiResponse<T> of(HttpStatus status, String message, T data) {
+        return new ApiResponse<>(status, message, data);
+    }
+
     public static <T> ApiResponse<T> of(HttpStatus status, T data) {
         return new ApiResponse<>(status, status.name(), data);
     }
 
     public static <T> ApiResponse<T> ok(T data) {
-        return new ApiResponse<>(HttpStatus.OK, HttpStatus.OK.name(), data);
+        return of(HttpStatus.OK, HttpStatus.OK.name(), data);
     }
 }
