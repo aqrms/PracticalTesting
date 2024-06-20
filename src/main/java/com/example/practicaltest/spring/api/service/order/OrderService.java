@@ -1,4 +1,4 @@
-package com.example.practicaltest.spring.service.order;
+package com.example.practicaltest.spring.api.service.order;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.practicaltest.spring.controller.order.request.OrderCreateRequest;
+import com.example.practicaltest.spring.api.controller.order.request.OrderCreateRequest;
+import com.example.practicaltest.spring.api.service.response.OrderResponse;
 import com.example.practicaltest.spring.domain.order.Order;
 import com.example.practicaltest.spring.domain.order.OrderRepository;
 import com.example.practicaltest.spring.domain.product.Product;
@@ -17,7 +18,6 @@ import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductType;
 import com.example.practicaltest.spring.domain.stock.Stock;
 import com.example.practicaltest.spring.domain.stock.StockRepository;
-import com.example.practicaltest.spring.service.response.OrderResponse;
 
 import lombok.RequiredArgsConstructor;
 

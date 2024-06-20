@@ -1,4 +1,4 @@
-package com.example.practicaltest.spring.controller.order.request;
+package com.example.practicaltest.spring.api.controller.order.request;
 
 import java.util.List;
 

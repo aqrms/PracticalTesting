@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.example.practicaltest.spring.controller.order.request.OrderCreateRequest;
+import com.example.practicaltest.spring.api.controller.order.request.OrderCreateRequest;
+import com.example.practicaltest.spring.api.service.order.OrderService;
+import com.example.practicaltest.spring.api.service.response.OrderResponse;
 import com.example.practicaltest.spring.domain.order.OrderRepository;
 import com.example.practicaltest.spring.domain.orderproduct.OrderProductRepository;
 import com.example.practicaltest.spring.domain.product.Product;
@@ -21,7 +23,6 @@ import com.example.practicaltest.spring.domain.product.ProductRepository;
 import com.example.practicaltest.spring.domain.product.ProductType;
 import com.example.practicaltest.spring.domain.stock.Stock;
 import com.example.practicaltest.spring.domain.stock.StockRepository;
-import com.example.practicaltest.spring.service.response.OrderResponse;
 
 @ActiveProfiles("test")
 @SpringBootTest

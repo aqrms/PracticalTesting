@@ -1,4 +1,4 @@
-package com.example.practicaltest.spring.controller.order;
+package com.example.practicaltest.spring.api.controller.order;
 
 import java.time.LocalDateTime;
 
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.practicaltest.spring.controller.order.request.OrderCreateRequest;
-import com.example.practicaltest.spring.service.order.OrderService;
-import com.example.practicaltest.spring.service.response.OrderResponse;
+import com.example.practicaltest.spring.api.controller.order.request.OrderCreateRequest;
+import com.example.practicaltest.spring.api.service.order.OrderService;
+import com.example.practicaltest.spring.api.service.response.OrderResponse;
 
 import lombok.RequiredArgsConstructor;
 

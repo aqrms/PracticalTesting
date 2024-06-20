@@ -1,21 +1,11 @@
-package com.example.practicaltest.spring.service.response;
+package com.example.practicaltest.spring.api.service.response;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.practicaltest.spring.domain.order.Order;
-import com.example.practicaltest.spring.domain.order.OrderStatus;
-import com.example.practicaltest.spring.domain.orderproduct.OrderProduct;
 import com.example.practicaltest.spring.domain.response.ProductResponse;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 
