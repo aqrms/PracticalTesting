@@ -2,6 +2,8 @@ package com.example.practicaltest.spring.api.service.order;
 
 import static com.example.practicaltest.spring.domain.product.ProductSellingStatus.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +14,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
+import com.example.practicaltest.spring.client.mail.MailSendClient;
 import com.example.practicaltest.spring.domain.history.mail.MailSendHistory;
 import com.example.practicaltest.spring.domain.history.mail.MailSendHistoryRepository;
 import com.example.practicaltest.spring.domain.order.Order;
@@ -37,6 +41,8 @@ class OrderStatServiceTest {
     private ProductRepository productRepository;
     @Autowired
     private MailSendHistoryRepository mailSendHistoryRepository;
+    @MockBean
+    private MailSendClient mailSendClient;
 
     @AfterEach
     void tearDown() {
@@ -62,6 +68,9 @@ class OrderStatServiceTest {
         Order order2 = createPaymentCompleteOrder(products, now);
         Order order3 = createPaymentCompleteOrder(products, LocalDateTime.of(2024, 6, 25, 23, 59));
         Order order4 = createPaymentCompleteOrder(products, LocalDateTime.of(2024, 6, 26, 0, 0));
+
+        when(mailSendClient.sendEmail(any(String.class), any(String.class), any(String.class), any(String.class)))
+            .thenReturn(true);
 
         //when
         boolean result = orderStatService.sendOrderStatMail(LocalDate.of(2024, 6, 25), "test@test.com");
