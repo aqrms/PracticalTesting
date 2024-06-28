@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import com.example.practicaltest.spring.client.mail.MailSendClient;
+import com.example.practicaltest.spring.domain.history.mail.MailSendHistory;
 import com.example.practicaltest.spring.domain.history.mail.MailSendHistoryRepository;
 
 class MailServiceTest {
@@ -30,6 +31,7 @@ class MailServiceTest {
 
         //then
         Assertions.assertThat(result).isTrue();
+        Mockito.verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
 
     }
 
