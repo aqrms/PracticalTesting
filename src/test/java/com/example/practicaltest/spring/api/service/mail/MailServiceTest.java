@@ -1,7 +1,7 @@
 package com.example.practicaltest.spring.api.service.mail;
 
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.BDDMockito.*;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.example.practicaltest.spring.client.mail.MailSendClient;
@@ -20,7 +18,7 @@ import com.example.practicaltest.spring.domain.history.mail.MailSendHistoryRepos
 @ExtendWith(MockitoExtension.class)
 class MailServiceTest {
 
-    @Spy
+    @Mock
     private MailSendClient mailSendClient;
     @Mock
     private MailSendHistoryRepository mailSendHistoryRepository;
@@ -31,18 +29,23 @@ class MailServiceTest {
     @Test
     void sendMail() {
         //given
-        // when(mailSendClient.sendEmail(any(String.class), any(String.class), any(String.class), any(String.class)))
+        // when(
+        //         mailSendClient.sendEmail(any(String.class), any(String.class), any(String.class), any(String.class)))
         //     .thenReturn(true);
-        doReturn(true)
-            .when(mailSendClient)
-            .sendEmail(any(String.class), any(String.class), any(String.class), any(String.class));
+        given(
+            mailSendClient.sendEmail(any(String.class), any(String.class), any(String.class), any(String.class)))
+            .willReturn(true);
+
+        // doReturn(true)
+        //     .when(mailSendClient)
+        //     .sendEmail(any(String.class), any(String.class), any(String.class), any(String.class));
 
         //when
         boolean result = mailService.sendMail("", "", "", "");
 
         //then
         Assertions.assertThat(result).isTrue();
-        Mockito.verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
+        verify(mailSendHistoryRepository, times(1)).save(any(MailSendHistory.class));
 
     }
 
